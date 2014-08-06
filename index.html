@@ -91,13 +91,12 @@
                 var x = document.forms["mesg_form"]["message"].value;
                 if (x != "") {
                     if (flip) {
-                        $('#messages').append($("<li class='row odd'>").text(nickname + ": "  + $('#m').val()));
-                        curr = $('#ulscroller li:last-child');
+                        $('#messages').append("<li class='row odd'><b>" + nickname + ": "  + "</b>" + $('#m').val() + "</li>");
                         socket.emit('chat message', $('#m').val());
                         $('#m').val('');
                         flip = false;
                     } else {
-                        $('#messages').append($("<li class='row even'>").text(nickname + ": "  + $('#m').val()));
+                        $('#messages').append("<li class='row even'><b>" + nickname + ": "  + "</b>" + $('#m').val() + "</li>");
                         socket.emit('chat message', $('#m').val());
                         $('#m').val('');
                         flip = true;
@@ -108,6 +107,10 @@
             });
 
             socket.on('chat message', function(msg) {
+
+                var msg_array = msg.split(":", 2);
+                var name = msg_array[0];
+                var mesg = msg_array[1];
 
                 ++count;
 
@@ -126,13 +129,25 @@
                     });
                 }
 
-                if (flip) {
-                    $('#messages').append($("<li class='row odd'>").text(msg));
-                    flip = false;
-                } else {
-                    $('#messages').append($("<li class='row even'>").text(msg));
-                    flip = true;
-                    init = false;
+                if (msg_array.length == 1) {
+                    if (flip) {
+                        $('#messages').append("<li class='row odd'><b>" + msg + "</b></li>");
+                        flip = false;
+                    } else {
+                        $('#messages').append("<li class='row even'><b>" + msg + "</b></li>");
+                        flip = true;
+                        init = false;
+                    }
+                }
+                if (msg_array.length > 1) {
+                    if (flip) {
+                        $('#messages').append("<li class='row odd'><b>" + name + ":</b>" + mesg + "</li>");
+                        flip = false;
+                    } else {
+                        $('#messages').append("<li class='row even'><b>" + name + ":</b>" + mesg + "</li>");
+                        flip = true;
+                        init = false;
+                    }
                 }
 
                 if (!window.mobilecheck() && !init) {
