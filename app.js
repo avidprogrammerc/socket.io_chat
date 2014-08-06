@@ -6,8 +6,6 @@ app.get('/', function(req, res){ // get request at the root the call back's
   res.sendfile('index.html');    // response object (res) servers the index.html file
 });
 
-sockets = {};
-
 io.on('connection', function(socket){
 
     socket.on('join', function(name) {
@@ -30,7 +28,7 @@ io.on('connection', function(socket){
 });
 
 http.listen(3000, function(){
-    console.log('Chat Server: v1.0');
+    console.log('Chat Server: v1.1');
     console.log('Author: Chris Conley');
     console.log('Servlet running on 24.219.209.129:3000\n');
 });
