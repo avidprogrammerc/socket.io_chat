@@ -7,14 +7,14 @@
         <link href="http://csconley.com/css/styles.css" rel="stylesheet">
         <style>
             .received {
-                background-color: rgba(255, 255, 186, 1);
+                background-color: rgba(255, 255, 255, 1);
                 padding-top: 20px;
                 padding-bottom: 20px;
                 margin: 3px;
             }
 
             .sent {
-                background-color: rgba(186, 231, 255, 1);
+                background-color: rgba(199, 233, 255, 1);
                 padding-top: 20px;
                 padding-bottom: 20px;
                 margin: 3px;
@@ -108,6 +108,7 @@
                     if (password === "elyk") {
                         socket.emit('join', nickname);
                         document.getElementById('heading').innerHTML = nickname + "@1440 Chat";
+                        document.title = nickname + "@1440 Chat";
                         count = -1;
                     } else {
                         window.close();
@@ -178,7 +179,7 @@
                         });
                         permission_check = true;
                     }
-                    if (!isActive && window.Notification && Notification.permission === 'granted') {
+                    if (!isActive && window.Notification && Notification.permission === 'granted' && !aContainsb(msg, "Number of users online")) {
                         var opt = {
                             tag: 'New Message!',
                             body: msg,
