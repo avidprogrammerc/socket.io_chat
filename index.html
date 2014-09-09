@@ -84,15 +84,14 @@
             var isActive         = false;
             var nickname         = "";
             var socket           = io();
-            var flip             = true;
             var init             = true;
-            var count            = -1;
-            var permission_check = false;
+            var count            = 0;
+            var permissionCheck = false;
             var numUsers         = "";
 
             $(window).focus(function() {
-                count = 0;
                 isActive = true;
+                count = 0;
             });
 
             $(window).blur(function() {
@@ -104,15 +103,9 @@
                 if (nickname == "" || nickname == null) {
                     window.close();
                 } else {
-                    password = prompt("Enter the chat room password:");
-                    if (password === "elyk") {
                         socket.emit('join', nickname);
                         document.getElementById('heading').innerHTML = nickname + "@1440 Chat";
                         document.title = nickname + "@1440 Chat";
-                        count = -1;
-                    } else {
-                        window.close();
-                    }
                 }
             });
 
@@ -142,22 +135,6 @@
                 var name = msg_array[0];
                 var mesg = msg.substring(msg.indexOf(":")+1)
 
-                ++count;
-
-                if (count == 1) {
-                    $.titleAlert(count + " new message!", {
-                        requireBlur:true,
-                        stopOnFocus:true,
-                        interval:1000
-                    });
-                } else if (count > 1) {
-                    $.titleAlert(count + " new messages!", {
-                        requireBlur:true,
-                        stopOnFocus:true,
-                        interval:1000
-                    });
-                }
-
                 if (msg_array.length == 1 && !aContainsb(msg, "Number of users online")) {
                     if (init) {
                         $('#messages').append("<li class='row received'><b>" + Autolinker.link(msg) + "</b></li>");
@@ -167,17 +144,32 @@
                     }
                 }
                 if (msg_array.length > 1 && !aContainsb(msg, "Number of users online")) {
+                    ++count;
                     $('#messages').append("<li class='row received'><b>" + name + ":</b>" + Autolinker.link(mesg) + "</li>");
+
+                    if (count == 1) {
+                        $.titleAlert(count + " new message!", {
+                            requireBlur:true,
+                            stopOnFocus:true,
+                            interval:1000
+                        });
+                    } else if (count > 1) {
+                        $.titleAlert(count + " new messages!", {
+                            requireBlur:true,
+                            stopOnFocus:true,
+                            interval:1000
+                        });
+                    }
                 }
 
                 if (!window.mobilecheck() && !init) {
-                    if (!permission_check) {
+                    if (!permissionCheck) {
                         Notification.requestPermission(function (status) {
                             if (Notification.permission !== status) {
                                 Notification.permission = status;
                             }
                         });
-                        permission_check = true;
+                        permissionCheck = true;
                     }
                     if (!isActive && window.Notification && Notification.permission === 'granted' && !aContainsb(msg, "Number of users online")) {
                         var opt = {
