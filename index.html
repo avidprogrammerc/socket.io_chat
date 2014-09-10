@@ -46,6 +46,14 @@
                 color: #777;
             }
 
+            .popover {
+                width: 200px;
+            }
+
+            .popover.bottom {
+                margin-top: -5px;
+            }
+
             ul {
                 margin-top: 50px;
             }
@@ -67,7 +75,7 @@
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <a id="heading" class="navbar-brand">Welcome to 1440 Chat</a>
-                <a id="user_count" class="navbar-brand navbar-right">Login to see who is here!</a>
+                <a id="user_count" class="navbar-brand navbar-right" data-content="" rel="hover" data-html="true" data-placement="bottom" data-trigger="hover" style="cursor:pointer; float: right !important">Login to see who is here!</a>
             </div>
         </div>
         <div class="container" id="mesg_container">
@@ -98,6 +106,8 @@
                 isActive = false;
             });
 
+            $('#user_count').popover();
+
             socket.on('connect', function(data) {
                 nickname = prompt("Name:");
                 if (nickname == "" || nickname == null) {
@@ -122,20 +132,23 @@
             });
 
             socket.on('chat message', function(msg) {
-
-                var getNumUsers = msg.indexOf("Number of users online");
-
-                if (getNumUsers > -1) {
+                if (aContainsb(msg, "Number of users online")) {
                     msgList = msg.split(" ");
                     numUsers = msgList[4];
                     updateNumUsers();
+                }
+
+                if (aContainsb(msg, "USERS!!!!!123451440")) {
+                    userList = msg.split(" ");
+                    list = userList[1].replace(/,/g , "<br />");
+                    document.getElementById('user_count').setAttribute('data-content', "<div style ='text-align:center'>"+list+"</div>");
                 }
 
                 var msg_array = msg.split(":", 2);
                 var name = msg_array[0];
                 var mesg = msg.substring(msg.indexOf(":")+1)
 
-                if (msg_array.length == 1 && !aContainsb(msg, "Number of users online")) {
+                if (msg_array.length == 1 && !aContainsb(msg, "Number of users online") && !aContainsb(msg, "USERS!!!!!123451440")) {
                     if (init) {
                         $('#messages').append("<li class='row received'><b>" + Autolinker.link(msg) + "</b></li>");
                         init = false;
@@ -143,7 +156,7 @@
                         $('#messages').append("<li class='row received'><b>" + Autolinker.link(msg) + "</b></li>");
                     }
                 }
-                if (msg_array.length > 1 && !aContainsb(msg, "Number of users online")) {
+                if (msg_array.length > 1 && !aContainsb(msg, "Number of users online") && !aContainsb(msg, "USERS!!!!!123451440")) {
                     ++count;
                     $('#messages').append("<li class='row received'><b>" + name + ":</b>" + Autolinker.link(mesg) + "</li>");
 
@@ -171,7 +184,7 @@
                         });
                         permissionCheck = true;
                     }
-                    if (!isActive && window.Notification && Notification.permission === 'granted' && !aContainsb(msg, "Number of users online")) {
+                    if (!isActive && window.Notification && Notification.permission === 'granted' && !aContainsb(msg, "Number of users online") && !aContainsb(msg, "USERS!!!!!123451440")) {
                         var opt = {
                             tag: 'New Message!',
                             body: msg,

@@ -16,6 +16,7 @@ io.on('connection', function(socket){
         console.log('NEW USER: ' + name);
         users.push(name);
         io.emit('chat message', "Number of users online " + users.length);
+        io.emit('chat message', "USERS!!!!!123451440 " + users);
     });
 
     socket.on('chat_message', function(msg) {
@@ -32,6 +33,7 @@ io.on('connection', function(socket){
                 users.splice(index, 1);
             }
             io.emit('chat message', "Number of users online " + users.length);
+            io.emit('chat message', "USERS!!!!!123451440 " + users);
         }
     });
 });
