@@ -31,6 +31,49 @@
                 </form>
             </div>
         </div>
+
+        <div class="modal fade" id="login" role="dialog">
+             <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="form-horizontal" name="commentform" action="">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">1440 Chat Login</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group" style="margin-bottom: 0px;">
+                                <label class="col-lg-2 control-label" for="name">Name:</label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="nickname" name="name" placeholder="Nickname (no spaces)"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <a class="btn btn-primary" data-dismiss="modal">Login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="login_failed" role="dialog">
+             <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="form-horizontal" name="commentform" action="">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">I couldn't log you in :(</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group" style="margin-bottom: 0px;">
+                                <p style="margin-bottom: 0px; padding: 10px;">You either entered a nickname with a space in it, or forgot to enter one at all! Please refresh and try again.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script>
             var isActive         = false;
             var nickname         = "";
@@ -52,14 +95,18 @@
             $('#user_count').popover();
 
             socket.on('connect', function(data) {
-                nickname = prompt("Name:");
-                if (nickname == "" || nickname == null) {
-                    window.close();
-                } else {
-                        socket.emit('join', nickname);
-                        document.getElementById('heading').innerHTML = nickname + "@1440 Chat";
-                        document.title = nickname + "@1440 Chat";
-                }
+                $('#login').modal('show');
+                $('#login').on('hidden.bs.modal', function(){
+                    nickname = $('#nickname').val();
+                    if ((nickname == "" || nickname == null) || (aContainsb(nickname, " "))) {
+                        $('#login_failed').modal('show');
+                        document.getElementById("m").remove();
+                    } else {
+                            socket.emit('join', nickname);
+                            document.getElementById('heading').innerHTML = nickname + "@1440 Chat";
+                            document.title = nickname + "@1440 Chat";
+                    }
+                });
             });
 
             $('form').submit(function() {
