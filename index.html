@@ -49,7 +49,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <a class="btn btn-primary" data-dismiss="modal">Login</a>
+                            <a id="lin" class="btn btn-primary" data-dismiss="modal">Login</a>
                         </div>
                     </div>
                 </div>
@@ -82,6 +82,10 @@
             var count            = 0;
             var permissionCheck = false;
             var numUsers         = "";
+
+            $(document).keypress(function(e) { 
+                if (e.which == 13) { $("#lin").click(); }    // enter (works as expected)
+            });
 
             $(window).focus(function() {
                 isActive = true;
