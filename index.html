@@ -18,7 +18,7 @@
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <a id="heading" class="navbar-brand">Welcome to 1440 Chat</a>
-                <a id="user_count" class="navbar-brand navbar-right" data-content="" rel="hover" data-html="true" data-placement="bottom" data-trigger="hover" style="cursor:pointer; float: right !important">Login to see who is here!</a>
+                <a id="user_count" class="navbar-brand navbar-right" data-content="" rel="click" data-html="true" data-placement="bottom" data-trigger="click" style="cursor:pointer; float: right !important">Login to see who is here!</a>
             </div>
         </div>
         <div class="container" id="mesg_container">
@@ -83,8 +83,10 @@
             var permissionCheck = false;
             var numUsers         = "";
 
-            $(document).keypress(function(e) { 
-                if (e.which == 13) { $("#lin").click(); }    // enter (works as expected)
+            $(document).keypress(function(e) {
+                if (e.which == 13) {
+                    $("#lin").click();
+                }
             });
 
             $(window).focus(function() {
@@ -100,6 +102,9 @@
 
             socket.on('connect', function(data) {
                 $('#login').modal('show');
+                $('#login').on('shown.bs.modal', function () {
+                        $('#nickname').focus();
+                });
                 $('#login').on('hidden.bs.modal', function(){
                     nickname = $('#nickname').val();
                     if ((nickname == "" || nickname == null) || (aContainsb(nickname, " "))) {
@@ -109,6 +114,7 @@
                             socket.emit('join', nickname);
                             document.getElementById('heading').innerHTML = nickname + "@1440 Chat";
                             document.title = nickname + "@1440 Chat";
+                            $("#m").focus()
                     }
                 });
             });
