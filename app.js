@@ -6,6 +6,10 @@ app.get('/', function(req, res){ // get request at the root the call back's
   res.sendfile('index.html');    // response object (res) servers the index.html file
 });
 
+app.get('/app.js', function(req, res) {
+    res.sendfile('app.js');
+});
+
 var users = [];
 
 io.on('connection', function(socket){
@@ -39,7 +43,7 @@ io.on('connection', function(socket){
 });
 
 http.listen(3000, function(){
-    console.log('Chat Server: v2.9');
+    console.log('Chat Server: v3.0');
     console.log('Author: Chris Conley');
     console.log('Servlet running on 24.219.209.129:3000\n');
 });
