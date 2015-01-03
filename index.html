@@ -136,7 +136,7 @@
                     if (!possible_image) {
                         $('#messages').append("<li class='row sent'><b>" + nickname + ": "  + "</b>" + Autolinker.link($('#m').val()) + "</li>");
                     } else {
-                        $('#messages').append("<li class='row sent'><b>" + nickname + ": "  + "</b>" + Autolinker.link(messageToSendArray.join(" ")) + "<img src='" + image_url + "' width='250px'/>" + "</li>");
+                        $('#messages').append("<li class='row sent'><b>" + nickname + ": "  + "</b>" + Autolinker.link(messageToSendArray.join(" ")) + " " + "<img src='" + image_url + "' width='250px'/>" + "</li>");
                     }
                     socket.emit('chat_message', $('#m').val());
                     $('#m').val('');
@@ -188,7 +188,7 @@
                     if (!possible_image) {
                         $('#messages').append("<li class='row received'><b>" + nickname + ": "  + "</b>" + Autolinker.link(mesg) + "</li>");
                     } else {
-                        $('#messages').append("<li class='row received'><b>" + nickname + ": "  + "</b>" + Autolinker.link(messageToSendArray.join(" ")) + "<img src='" + image_url + "' width='250px'/>" + "</li>");
+                        $('#messages').append("<li class='row received'><b>" + nickname + ": "  + "</b>" + Autolinker.link(messageToSendArray.join(" ")) + " " + "<img src='" + image_url + "' width='250px'/>" + "</li>");
                     }
 
                     if (count == 1) {
