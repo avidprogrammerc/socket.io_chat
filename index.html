@@ -206,11 +206,11 @@
                         }
                     }
                     if (possible_image) {
-                        $('#messages').append("<li class='row received'><b>" + nickname + ": "  + "</b>" + Autolinker.link(messageToSendArray.join(" ")) + " " + "<img src='" + image_url + "' width='250px'/>" + "</li>");
+                        $('#messages').append("<li class='row received'><b>" + name + ": "  + "</b>" + Autolinker.link(messageToSendArray.join(" ")) + " " + "<img src='" + image_url + "' width='250px'/>" + "</li>");
                     } else if (possible_youtube){
-                        $('#messages').append("<li class='row sent'><b>" + nickname + ": "  + "</b>" + Autolinker.link(messageToSendArray.join(" ")) + " " + "<iframe src='" + youtube_url + "' width='420' height='315' allowfullscreen='true'/>" + "</li>");
+                        $('#messages').append("<li class='row received'><b>" + name + ": "  + "</b>" + Autolinker.link(messageToSendArray.join(" ")) + " " + "<iframe src='" + youtube_url + "' width='420' height='315' allowfullscreen='true'/>" + "</li>");
                     } else {
-                        $('#messages').append("<li class='row received'><b>" + nickname + ": "  + "</b>" + Autolinker.link(mesg) + "</li>");
+                        $('#messages').append("<li class='row received'><b>" + name + ": "  + "</b>" + Autolinker.link(mesg) + "</li>");
                     }
 
                     if (count == 1) {
