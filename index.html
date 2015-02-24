@@ -132,6 +132,7 @@
                            || (aContainsb(messageToSendArray[i], '.gif'))) {
                             possible_image = true;
                             image_url = messageToSendArray[i];
+                            messageToSendArray.push(" ");
                             messageToSendArray.splice(i,1);
                         }
 
