@@ -42,9 +42,9 @@ io.on('connection', function(socket){
     });
 });
 
-http.listen(3000, function(){
+http.listen(8080, function(){
     console.log('Chat Server: v3.0');
     console.log('Author: Chris Conley');
-    console.log('Servlet running on port 3000\n');
+    console.log('Servlet running on port 8080\n');
 });
 
