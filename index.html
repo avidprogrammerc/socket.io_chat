@@ -17,7 +17,7 @@
 
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
-                <a id="heading" class="navbar-brand">Welcome to csconley.com Chat</a>
+                <a id="heading" class="navbar-brand">Welcome to chat.csconley.com</a>
                 <a id="user_count" class="navbar-brand navbar-right" data-content="" rel="click" data-html="true" data-placement="bottom" data-trigger="click" style="cursor:pointer; float: right !important">Login to see who is here!</a>
             </div>
         </div>
@@ -27,7 +27,7 @@
         <div class="navbar navbar-inverse navbar-fixed-bottom">
             <div class="container">
                 <form name="mesg_form" class="form-horizontal" action="">
-                    <input class="form-control" id="m" name="message" autocomplete="off" placeholder="Press Enter to Send"/>
+                    <input class="form-control" id="m" name="message" autocomplete="off" placeholder="Press Enter to Send" style="display: none;"/>
                 </form>
             </div>
         </div>
@@ -113,6 +113,7 @@
                     } else {
                             socket.emit('join', nickname);
                             document.getElementById('heading').innerHTML = nickname;
+                            document.getElementById('m').style.display = ""
                             $("#m").focus()
                     }
                 });
